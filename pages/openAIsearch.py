@@ -20,9 +20,7 @@ from datetime import datetime
 #writing the output to a file is not working 
 #look into it
 
-#openai.api_key = "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"
-#openai.api_key = "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"
-openai.api_key = "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"
+openai.api_key = "*****"
 
 mydb = mysql.connector.connect(
 	host = "localhost",
