@@ -6,7 +6,7 @@ import pandas as pd
 #sidebar()
 
 query_params = st.experimental_get_query_params()
-openAI_Id = query_params.get("key1")
+file_id = query_params.get("key1")
 
 st.header("View Log")
 #fetch log details from database
@@ -18,23 +18,13 @@ mydb = mysql.connector.connect(
 	database = "codesearch"
 )
 
-df = pd.read_sql("SELECT * FROM openAI WHERE openAI_id = %d " % (int(openAI_Id[0])), mydb)
-
-st.subheader("Search Log id "+openAI_Id[0])
-st.write("**searched for**      : "+df["search_description"][0])
-
-file_id = df["file_id"][0]
-
-
-
-df1 = pd.read_sql("SELECT * FROM fileDetails WHERE file_id = %d " % (int(file_id)), mydb)
+df1 = pd.read_sql("SELECT * FROM fileDetails WHERE file_id = %d " % (int(file_id[0])), mydb)
 
 mydb.close()
-
-fpath = "openai/"+str(df1["file_name"][0])+".txt"
+#st.write("Search Description: "+str(df1["file_description"][0]))
+st.text_input("Search Description: ", value=str(df1["file_description"][0]), disabled=True)
 st.write("Searched date : "+str(df1["created_date"][0]))
+st.write("OpenAI response:")
+fdata = df1["file_data"][0].decode('UTF-8')
+st.write(fdata)
 
-with st.expander("Result",True):
-   f = open(fpath, 'r') 
-   s = f.read()
-   st.code(s, language='c')

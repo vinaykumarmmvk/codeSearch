@@ -119,31 +119,19 @@ if genre == 'Search Page':
 if genre == 'OpenAI Search':
     st.write("openAI SEARCH")
     search_description = st.text_input("Enter openAI Search description")
-    file_name = st.text_input("Enter file name")
 
-    query = "Select * from openAI"
-
-    query1= "Select * from fileDetails where "
-
-    df = pd.read_sql(query, mydb)
-
-    file_count = 0
-    for file_count in range(0,len(df)):
-        if file_count == 0:
-            query1 = query1 + "file_id LIKE '%s'" % df['file_id'][file_count]
+    query1= "Select * from fileDetails where file_name like 'OpenAI%' and extension_id = 8"
+    
+    if search_description is not '':
+        query1 = query1+" and file_description like '%"+search_description+"%'"
         
-        else:
-            query1 = query1 + "OR file_id LIKE '%s'" % df['file_id'][file_count]
+    df = pd.read_sql(query1, mydb)
 
-
-    st.write(query1)
-    df1 = pd.read_sql(query1, mydb)
-    df['file_name'] = df1['file_name'] 
-    st.write(df)      
+         
     formatter = {
-            'openAI_id': ('Index', PINLEFT),
-            'search_description': ('Search description', {'width': 120}),
-            'file_name': ('File name', {'width': 120})
+            'file_name': ('File name', {'width': 120}),
+            'file_description': ('Search description', {'width': 120}),
+            'created_date': ('Searched date', {'width': 120})
     }
         
     if len(df) > 0:
@@ -157,10 +145,8 @@ if genre == 'OpenAI Search':
             )
             
         if len(data.selected_rows) > 0:
-            openAI_id = str(data.selected_rows[0]["openAI_id"])
-
-        if st.button('View'):
-            st.markdown("[share](/view_ai_log?key1="+openAI_id+")")
+            file_id = str(data.selected_rows[0]["file_id"])
+            st.markdown("[share](/view_ai_log?key1="+file_id+")")
 
         if st.button('Download'):
             st.write('download clicked') 

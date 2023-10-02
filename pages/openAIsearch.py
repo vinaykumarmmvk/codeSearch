@@ -1,27 +1,17 @@
-import streamlit as st
-import mysql.connector
-import pandas as pd
-from splinter import Browser
-
-from sqlalchemy import create_engine, text
-
-import openai
-from concurrent.futures import ThreadPoolExecutor
-
-import string
 import random
-
+import string
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
+
+import mysql.connector
+import openai
+import streamlit as st
 
 #from nav_bar import sidebar
 
 #sidebar()
 
-#writing the output to a file is not working 
-#look into it
-
-openai.api_key = "*****"
-
+openai.api_key = "xxxx"
 mydb = mysql.connector.connect(
 	host = "localhost",
 	user = "root",
@@ -69,8 +59,10 @@ if st.button('View'):
         #check if there is a valid description
         #otherwise enter description
         fname = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+        fname = "OpenAI_"+fname;
         
         fdata = process_chunks(search_txt)
+        st.write("Result:")
         st.write(fdata)
         file_blob = fdata.encode('UTF-8')
         
