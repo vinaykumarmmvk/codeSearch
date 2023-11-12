@@ -1,21 +1,18 @@
 import streamlit as st
 import mysql.connector
 import requests
+from nav_js import navbar_loggedOut
+from nav_js import navbar_loggedIn
+import time
+from nav_js import headerstyle
 
-from nav_bar import sidebar
+st.set_page_config(initial_sidebar_state="collapsed",
+    layout="wide")
 
-sidebar()
+time.sleep(1)
+navbar_loggedOut()
 
-mydb = mysql.connector.connect(
-	host = "localhost",
-	user = "root",
-	password = "1234",
-	database = "codesearch"
-)
-
-r = requests.get('http://localhost:8502', )
-
-prog_name = st.text_input("Email")
+email_id = st.text_input("Email")
 
 if st.button('Send Email'):
     #validate entered email, if it exists in db

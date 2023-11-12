@@ -3,9 +3,20 @@ import mysql.connector
 import pandas as pd
 import sys
 from datetime import datetime
-#from nav_bar import sidebar
+from nav_js import navbar_loggedOut
+from nav_js import navbar_loggedIn
+import time
+from nav_js import getusrname
+from nav_js import headerstyle
 
-#sidebar()
+
+st.set_page_config(initial_sidebar_state="collapsed",
+    layout="wide")
+
+time.sleep(1)
+navbar_loggedIn("search")
+
+headerstyle()
 
 mydb = mysql.connector.connect(
 	host = "localhost",
@@ -14,9 +25,10 @@ mydb = mysql.connector.connect(
 	database = "codesearch"
 )
 
-#st.session_state['username']
-username = "test"
+
+username = getusrname()
 #Retrieve user Id from username 
+
 userId = (pd.read_sql("select user_id from users where user_name = '%s'"% (username), mydb))['user_id'][0]
 
 #Retrieve the programming lang. the user is skilled/experienced 
@@ -46,15 +58,22 @@ for index in range(df['extension_type'].size):
 filePath = ""
 filename = ""
 prog_content = ""
-prog_name = ""
+
 prog_description = ""
 option = ""
 
 #try catch to be added to check folder already exists
+st.header("Add Program")
+query_params = st.experimental_get_query_params()
+prog_name = query_params.get("key1")[0]
+
+if prog_name is None:
+   prog_name = ""
+
 
 if len(skill_set) != 0:
    with st.form(key='addprogform',clear_on_submit=True):
-      prog_name = st.text_input("Enter program name")
+      prog_name = st.text_input("Enter program name", prog_name)
       prog_description = st.text_input("Description")
 
       option = st.selectbox('Please Select Programming language to edit:', skill_set)
@@ -98,4 +117,4 @@ if len(skill_set) != 0:
 
 else:
    #give hyperlink to todo screen to update skills
-   st.write("Please update your skill set to add/edit program.")
+   st.write("\n Please update your skill set to add/edit program.")

@@ -20,6 +20,14 @@ credentials:
       email: asdfds@asdfa.com
       name: asdfeff
       password: $2b$12$Wv7k5XzSl7J90T1RwG0fy.j/e7.WwdPM4RgIzovHbJDfCplrTFAKa
+    devtest:
+      email: mmvinaykumar.mm@gmail.com
+      name: Developer
+      password: $2b$12$CC15nC50Pa/e/7m/zGz54.0WVKLhGRNGRFLBykjF6wrd1OjDWCD92
+    integtest:
+      email: mmvinaykumar.mm@gmail.com
+      name: vinay
+      password: $2b$12$1yqfRnQcopFS4Cfos7xk9OdpTDwI0H6KJa7i9P8WphTVLvBBfk/EK
     jsmith:
       email: mmvinaykumar.mmvk@gmail.com
       name: John Smith
@@ -28,6 +36,10 @@ credentials:
       email: newuser@newuser.com
       name: newuser
       password: $2b$12$SJHUSHVmiMbhNxvOrF1.yOt3nFB4cYCIrTaBTR1jpxG1OSbzvu2UC
+    newuser1:
+      email: manjunath.vinay2@gmail.com
+      name: Vinay Kumar
+      password: $2b$12$OZ.d0e0BH69GT0wFHdw7MO3rJj458U8dtTIYR.hxCsOQdjfs6VHSu
     qwer1:
       email: asdfsa@asdf.com
       name: qwer

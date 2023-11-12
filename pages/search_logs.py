@@ -6,10 +6,19 @@ import streamlit as st
 from streamlit_javascript import st_javascript
 
 from agstyler import PINLEFT, PRECISION_TWO, draw_grid
+from page_redirect import open_page
+from nav_js import navbar_loggedOut
+from nav_js import navbar_loggedIn
+import time
+from nav_js import headerstyle
 
-#from nav_bar import sidebar
+st.set_page_config(initial_sidebar_state="collapsed",
+    layout="wide")
 
-#sidebar()
+time.sleep(1)
+navbar_loggedIn("searchlogs")
+
+headerstyle()
 
 mydb = mysql.connector.connect(
 	host = "localhost",
@@ -18,6 +27,7 @@ mydb = mysql.connector.connect(
 	database = "codesearch"
 )
 
+st.header("Search Logs")
 genre = st.radio(
     "Please select type of log/s",
     ('Search Page', 'OpenAI Search'))
@@ -109,10 +119,7 @@ if genre == 'Search Page':
             log_id = str(data.selected_rows[0]["search_id"])
 
         if st.button('View'):
-            st.markdown("[share](/view_log?key1="+log_id+")")
-
-        if st.button('Download'):
-            st.write('download clicked') 
+                open_page("/view_log?key1="+log_id) 
 
     mydb.close()
 
@@ -146,9 +153,6 @@ if genre == 'OpenAI Search':
             
         if len(data.selected_rows) > 0:
             file_id = str(data.selected_rows[0]["file_id"])
-            st.markdown("[share](/view_ai_log?key1="+file_id+")")
-
-        if st.button('Download'):
-            st.write('download clicked') 
+            open_page("/view_ai_log?key1="+file_id) 
 
     mydb.close()

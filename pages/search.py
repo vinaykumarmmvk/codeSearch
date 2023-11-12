@@ -7,18 +7,34 @@ import numpy as np
 from streamlit_javascript import st_javascript
 
 from agstyler import PINLEFT, PRECISION_TWO, draw_grid
+from nav_js import navbar_loggedOut
+from nav_js import navbar_loggedIn
+import time
+from page_redirect import open_page
+from nav_js import getusrname
+from nav_js import headerstyle
 
-#from nav_bar import sidebar
+st.set_page_config(initial_sidebar_state="collapsed",
+    layout="wide")
 
-#sidebar()
+time.sleep(1)
 
+username = getusrname()
+st.write(username)
+if username != "":
+    navbar_loggedIn("search")
+
+else:
+    navbar_loggedOut("search")
+
+headerstyle()
 mydb = mysql.connector.connect(
 	host = "localhost",
 	user = "root",
 	password = "1234",
 	database = "codesearch"
 )
-
+st.header("Search page")
 cursor = mydb.cursor()
 add_data = ("INSERT INTO searchData "
                "( searched_for, result_exists , extension_id, search_date) "
@@ -107,10 +123,7 @@ if prog_name is not '' and len(options) != 0 :
     df['PL'] = progList
 
     formatter = {
-        #'file_id': ('File ID', PINLEFT),
         'file_name': ('File Name', {'width': 120}),
-        #'code_id': ('Code ID', {'width': 80}),
-        #'extension_id': ('EXT ID', {'width': 80}),
         'PL': ('Prog lang', {'width': 100}),
         'created_date': ('Created date', {**PRECISION_TWO, 'width': 100})
     }
@@ -128,7 +141,11 @@ if prog_name is not '' and len(options) != 0 :
         
         if len(data.selected_rows) > 0:
             file_name = data.selected_rows[0]["file_name"]
-            st.markdown("[View](../view_program?key1="+file_name+")")
+            open_page("../view_program?key1="+file_name)
+    else:
+        st.warning("Result does not exists!")
+        if st.button("OpenAI Search"):
+            open_page("../openAITest")
 
     bind_socket(prog_name, result_exists, current_dateTime) 
 

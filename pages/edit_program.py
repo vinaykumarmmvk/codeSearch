@@ -2,9 +2,19 @@ import streamlit as st
 import mysql.connector
 import pandas as pd
 from datetime import datetime
-#from nav_bar import sidebar
+from page_redirect import open_page
+from nav_js import navbar_loggedOut
+from nav_js import navbar_loggedIn
+import time
+from nav_js import getusrname
+from nav_js import headerstyle
 
-#sidebar()
+st.set_page_config(initial_sidebar_state="collapsed",
+    layout="wide")
+
+time.sleep(1)
+navbar_loggedIn("search")
+username = getusrname()
 
 mydb = mysql.connector.connect(
 	host = "localhost",
@@ -13,11 +23,11 @@ mydb = mysql.connector.connect(
 	database = "codesearch"
 )
 
-#query_params = st.experimental_get_query_params()
-#part_filename = query_params.get("key1")
+query_params = st.experimental_get_query_params()
+part_filename = query_params.get("key1")
 
-#st.session_state['username']
-username = "test"
+headerstyle()
+
 #Retrieve user Id from username 
 #file name should be unique in filedetails table
 userId = (pd.read_sql("select user_id from users where user_name = '%s'"% (username), mydb))['user_id'][0]
@@ -39,10 +49,11 @@ for index in range(df['extension_type'].size):
     value = df['extension_type'][index]
     skill_set.append(value)
 
-part_filename = ["Ford", "Volvo", "BMW"] 
-part_filename[0] = "dbAddProg"
 fname = part_filename[0]
-st.header(part_filename[0])
+st.header("Edit Program"+part_filename[0])
+
+if st.button('Cancel'):
+ open_page("../view_program?key1="+fname)
 
 #drop down to select the prog lang list
 #show prog list based on the skill set of the user

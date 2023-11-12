@@ -6,6 +6,18 @@ import mysql.connector
 import pandas as pd
 import streamlit as st
 import numpy as np
+from nav_js import navbar_loggedOut
+from nav_js import navbar_loggedIn
+import time
+from nav_js import headerstyle
+
+st.set_page_config(initial_sidebar_state="collapsed",
+    layout="wide")
+
+time.sleep(1)
+navbar_loggedOut("login")
+
+headerstyle()
 
 mydb = mysql.connector.connect(
 	host = "localhost",
@@ -13,7 +25,7 @@ mydb = mysql.connector.connect(
 	password = "1234",
 	database = "codesearch"
 )
-
+st.header("Signup")
 cursor = mydb.cursor()
 add_data = ("INSERT INTO users "
                "( user_name, user_fullname , user_password, email) "

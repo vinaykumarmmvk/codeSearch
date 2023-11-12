@@ -1,14 +1,21 @@
 import streamlit as st
 import mysql.connector
 import pandas as pd
-#from nav_bar import sidebar
+from nav_js import navbar_loggedOut
+from nav_js import navbar_loggedIn
+import time
+from nav_js import headerstyle
 
-#sidebar()
+st.set_page_config(initial_sidebar_state="collapsed",
+    layout="wide")
+
+time.sleep(1)
+navbar_loggedIn("searchlogs")
 
 query_params = st.experimental_get_query_params()
 file_id = query_params.get("key1")
 
-st.header("View Log")
+st.header("View OpenAI Log")
 #fetch log details from database
 
 mydb = mysql.connector.connect(

@@ -6,19 +6,35 @@ from datetime import datetime
 import mysql.connector
 import openai
 import streamlit as st
+from nav_js import navbar_loggedOut
+from nav_js import navbar_loggedIn
+import time
+from nav_js import getusrname
+from nav_js import headerstyle
 
-#from nav_bar import sidebar
+st.set_page_config(initial_sidebar_state="collapsed",
+    layout="wide")
 
-#sidebar()
+time.sleep(1)
 
-openai.api_key = "xxxx"
+username = getusrname()
+
+if username != "":
+    navbar_loggedIn("search")
+
+else:
+    navbar_loggedOut("search")
+
+headerstyle()
+
+
 mydb = mysql.connector.connect(
 	host = "localhost",
 	user = "root",
 	password = "1234",
 	database = "codesearch"
 )
-
+st.header("OpenAI Search")
 cursor = mydb.cursor()
 add_filequery = ("INSERT INTO fileDetails "
                "( file_name, file_description, user_id , extension_id, file_data, created_date) "
@@ -59,7 +75,7 @@ if st.button('View'):
         #check if there is a valid description
         #otherwise enter description
         fname = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
-        fname = "OpenAI_"+fname;
+        fname = "OpenAI_"+fname
         
         fdata = process_chunks(search_txt)
         st.write("Result:")

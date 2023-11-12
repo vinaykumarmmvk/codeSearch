@@ -2,9 +2,18 @@ import streamlit as st
 import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
+from nav_js import navbar_loggedOut
+from nav_js import navbar_loggedIn
+import time
+from nav_js import headerstyle
 
-# emojis: https://www.webfx.com/tools/emoji-cheat-sheet/
-st.set_page_config(page_title="Sales Dashboard", page_icon=":bar_chart:", layout="wide")
+st.set_page_config(initial_sidebar_state="collapsed",
+    layout="wide")
+
+time.sleep(1)
+navbar_loggedOut("login")
+
+headerstyle()
 
 with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)

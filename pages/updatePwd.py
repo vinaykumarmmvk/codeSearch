@@ -8,6 +8,19 @@ import streamlit_authenticator as stauth  # pip install streamlit-authenticator
 import yaml
 from yaml.loader import SafeLoader
 import mysql.connector
+from nav_js import navbar_loggedOut
+from nav_js import navbar_loggedIn
+import time
+from nav_js import getusrname
+from nav_js import headerstyle
+
+st.set_page_config(initial_sidebar_state="collapsed",
+    layout="wide")
+
+time.sleep(1)
+navbar_loggedIn("profile")
+
+headerstyle()
 
 mydb = mysql.connector.connect(
 	host = "localhost",
@@ -31,23 +44,14 @@ authenticator = stauth.Authenticate(
     config['preauthorized']
 )
 
-name, authentication_status, username = authenticator.login("Login", "main")
+username = getusrname()
 
-if authentication_status == False:
-    st.error("Username/password is incorrect")
-
-if authentication_status == None:
-    st.warning("Please enter your username and password")
-
-if authentication_status:
-    st.write("login success")
-    authenticator.logout("Logout", "sidebar")
-
+if username != "":
     try:
-        if authenticator.reset_password(username, 'Reset password'):
+        if authenticator.reset_password(username, 'Change password'):
             with open('config.yaml', 'w') as file:
                 yaml.dump(config, file, default_flow_style=False)
-            
+                
             newpwd = config['credentials']['usernames'][username]['password']
             update_query = cursor.execute("Update users set user_password = '%s' where user_name = '%s'"%( newpwd, username))
             mydb.commit()
@@ -56,4 +60,7 @@ if authentication_status:
             st.success('Password modified successfully')
 
     except Exception as e:
-        st.error(e)
+        st.error(e)    
+
+else:
+     st.warning("Session expired please login again!")

@@ -7,9 +7,26 @@ import streamlit as st  # pip install streamlit
 import streamlit_authenticator as stauth  # pip install streamlit-authenticator
 import yaml
 from yaml.loader import SafeLoader
+from nav_js import navbar_loggedOut
+from nav_js import navbar_loggedIn
+from nav_js import setusrname
+from nav_js import getusrname
+import time
+import requests
+from nav_js import headerstyle
 
-# emojis: https://www.webfx.com/tools/emoji-cheat-sheet/
-st.set_page_config(page_title="Sales Dashboard", page_icon=":bar_chart:", layout="wide")
+st.set_page_config(initial_sidebar_state="collapsed",
+    layout="wide")
+
+username = getusrname()
+
+if username != "":
+    navbar_loggedIn("login")
+
+else:
+    navbar_loggedOut("login")
+
+headerstyle()
 
 # login and password change page using streamlit authentication
 
@@ -33,9 +50,8 @@ if authentication_status == None:
     st.warning("Please enter your username and password")
 
 if authentication_status:
-    st.write("login success")
-    authenticator.logout("Logout", "sidebar")
-
+    st.write("login success"+username)
+    setusrname(username)
 
 st.markdown("""
     <a href="/signup" target = "_self"> 
