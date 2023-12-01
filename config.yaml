@@ -23,11 +23,11 @@ credentials:
     devtest:
       email: mmvinaykumar.mm@gmail.com
       name: Developer
-      password: $2b$12$CC15nC50Pa/e/7m/zGz54.0WVKLhGRNGRFLBykjF6wrd1OjDWCD92
+      password: $2b$12$wjFCeVEFvl3xxnAZ9QwVAuQlEx34i0IRjzr52aAWuVRqWXh8aTIHa
     integtest:
       email: mmvinaykumar.mm@gmail.com
-      name: vinay
-      password: $2b$12$1yqfRnQcopFS4Cfos7xk9OdpTDwI0H6KJa7i9P8WphTVLvBBfk/EK
+      name: vinay kumar
+      password: $2b$12$2O2pkbCGCZBqHDiFutiK5ON7VHS0g.edHBIqS/2qGP8yKHXpaQQEG
     jsmith:
       email: mmvinaykumar.mmvk@gmail.com
       name: John Smith
@@ -52,6 +52,10 @@ credentials:
       email: manjunath.vinay2@gmail.com
       name: Rebecca Briggs
       password: $2b$12$bCeVVC8U8StXOEX77pzhV.qZy.o0wGIXbj2CDP5lsh5VCsKpwJmS6
+    signuptest:
+      email: mmvinaykumar.mm@gmail.com
+      name: Sign Up
+      password: $2b$12$B7FfWDNB3nJi4FkL5NiF7.t3qL1/GHppDWz0Oj3Gko7nDNQgj6ECa
     vkumar:
       email: test
       name: test1
@@ -68,6 +72,10 @@ credentials:
       email: mmvinaykumar.mm@gmail.com
       name: VinayKumar
       password: $2b$12$5JzZOXtgSXyWYNrkvUbUduPBb1VpRenOowQXw28XpYY5YVz7G8dim
+    vkumarmm:
+      email: mmvinaykumar.mm@gmail.com
+      name: Vinay Kumar
+      password: $2b$12$.6Lrwje5KqV8wm3KpVG0yOaEt92ywDp13HoFzrAoWYLCUemkNNF6y
     yamltest:
       email: yamltest@yamltest
       name: yamltest

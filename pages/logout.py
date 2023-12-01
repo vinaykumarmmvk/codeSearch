@@ -1,37 +1,39 @@
-import streamlit as st 
-import streamlit_authenticator as stauth 
-import yaml
-from yaml.loader import SafeLoader
-from nav_js import navbar_loggedIn
-from nav_js import setusrname
-import time
-from page_redirect import open_page
-from nav_js import headerstyle
+#logout - webpage to sign out from logged in user 
+#author - Vinay Kumar Mysuru Manjunath
+#github link - https://github.com/vinaykumarmmvk/codeSearch
 
-st.set_page_config(initial_sidebar_state="collapsed",
-    layout="wide")
+import streamlit as st  # pip install streamlit
+from header import navbar #customized navigation bar
+from header import setusername # set loggedin username
+from page_redirect import open_pageself # function to redirect in same tab
+from yaml_config import get_config #to get configuration details needed for authentication
+from yaml_config import get_auth #to get authenticator object with cookies fetched from config file
 
-time.sleep(1)
-navbar_loggedIn("profile")
 
-headerstyle()
+username = navbar("logout")#pass the header function with logout as page name
 
-with open('config.yaml') as file:
-    config = yaml.load(file, Loader=SafeLoader) 
-    
-authenticator = stauth.Authenticate(
-    config['credentials'],
-    config['cookie']['name'],
-    config['cookie']['key'],
-    config['cookie']['expiry_days'],
-    config['preauthorized']
-)
+authenticator = get_auth() #to get authenticator object with cookies fetched from config file
+config = get_config() #to get configuration details needed for authentication
 
-st.header("Log Out")
+#streamlit display confirmation message of logout 
 st.write("Are you sure you want to logout?")
-if authenticator.logout("Yes"):
-    setusrname("")
-    open_page("/login")
 
+try:
+    #if yes button clicked by user
+    if st.button("Yes"):
+        #reset all the variable values in session state
+        st.session_state['logout'] = True
+        st.session_state['name'] = None
+        st.session_state['username'] = None
+        st.session_state['authentication_status'] = None
+        setusername("")
+        #after logged out redirect to home page
+        open_pageself("/home")
+
+#exception handle to any logout issues
+except Exception as e:
+    st.warning(e)
+
+#if cancel button clicked redirect to home page without logging out
 if st.button("Cancel"):
-    open_page("/todo_search")
+    open_pageself("/home")

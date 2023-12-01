@@ -1,9 +1,12 @@
+#agstyler - used for adding table and it's configurations
+#author - Vinay Kumar Mysuru Manjunath
+#github link - https://github.com/vinaykumarmmvk/codeSearch
+
 from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 from st_aggrid.shared import GridUpdateMode, JsCode
 
-MAX_TABLE_HEIGHT = 500
-
+MAX_TABLE_HEIGHT = 800
 
 def get_numeric_style_with_precision(precision: int) -> dict:
     return {"type": ["numericColumn", "customNumericFormat"], "precision": precision}
@@ -53,7 +56,7 @@ def draw_grid(
         update_mode=GridUpdateMode.SELECTION_CHANGED | GridUpdateMode.VALUE_CHANGED,
         allow_unsafe_jscode=True,
         fit_columns_on_grid_load=fit_columns,
-        height=min(max_height, (1 + len(df.index)) * 29),
+        height=min(max_height+10, (2 + len(df.index)) * 60),
         theme=theme,
         key=key,
         custom_css=css

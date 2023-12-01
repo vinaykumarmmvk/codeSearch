@@ -1,39 +1,18 @@
-import streamlit as st
-from nav_js import navbar_loggedOut
-from nav_js import navbar_loggedIn
-import time
-import streamlit_authenticator as stauth  # pip install streamlit-authenticator
-import yaml
-from yaml.loader import SafeLoader
-import requests
-from pages import aboutus
+#home - details about the website
+#author - Vinay Kumar Mysuru Manjunath
+#github link - https://github.com/vinaykumarmmvk/codeSearch
 
-from streamlit import session_state as state
-from streamlit.components.v1 import html
-from streamlit_javascript import st_javascript
-import re
-import code
-import socket
-from json import loads as JSON
-from nav_js import getusrname
-from nav_js import headerstyle
+import streamlit as st #streamlit framework alias as st
+from header import navbar #customized navigation bar
 
-st.set_page_config(initial_sidebar_state="collapsed",
-    layout="wide")
+username = navbar("home")#pass the header function with home as page name
 
-time.sleep(1)
+st.subheader("Algorithm search website")
 
-username = getusrname()
-
-if username != "":
-    navbar_loggedIn("home")
-
-else:
-    navbar_loggedOut("home")
-
-headerstyle()
-
-st.header("Code Search for Algorithms")
-st.write("Python website using Streamlit framework to show,download and update ")
-st.write("the code of various algorithms indifferent programming languages like Java, C, C++, C#,Python and JavaScript.")
-st.write("The website has search algorithm page, view algorithmpage, login page, signup page, todo page, search log pageand various other pages.")
+#create 3 columns - col1 and col2 for space, content_col for text 
+col1 ,content_col, col2 = st.columns([1,20,1])
+with content_col:
+    st.write("A website that provides all the algorithms in different programming languages is a useful tool for developers. It allows developers to add and share their algorithms with other users. They can also develop new algorithms or upgrade the existing ones to improve their efficiency. If a user is searching for an algorithm that doesn't exist, developers can help the user add it to the website. ")
+    st.write("The website provides a user interface (UI) to search for algorithms in various programming languages. If the algorithm is unavailable in the database, the user is redirected to the ChatGPT search result. The algorithm code is stored in a table as a BLOB file. ")
+    st.write("When the user searches for a specific algorithm language, they are redirected to a view page with different programming languages. The user can download the code from this page. All search data is recorded in the database so that developers/admins can check which algorithms have no existing results in the database. They can then add the code for those missing algorithms.")
+    st.write("Github link - https://github.com/vinaykumarmmvk/codeSearch")
